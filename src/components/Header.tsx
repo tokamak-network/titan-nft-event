@@ -26,6 +26,7 @@ export function Header() {
       justifyContent={"space-between"}
       alignItems={"center"}
       px={"40px"}
+      pos={"absolute"}
     >
       <Box h={"30px"}>
         <Image src={LOGO_IMAGE} alt={"LOGO_IMAGE"} />

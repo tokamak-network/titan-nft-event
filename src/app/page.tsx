@@ -18,11 +18,22 @@ import { WatchPendingTransactions } from "../components/WatchPendingTransactions
 import { WriteContract } from "../components/WriteContract";
 import { WriteContractPrepared } from "../components/WriteContractPrepared";
 import { Header } from "../components/Header";
+import { MainBg } from "../components/MainBg";
+import { BuyNFT } from "../components/BuyNFT";
 
 export default function Page() {
   return (
-    <Flex>
-      <Header />
+    <Flex w={"100%"} justifyContent={"center"}>
+      <Flex
+        flexDir={"column"}
+        w={"1280px"}
+        alignItems={"center"}
+        rowGap={"183px"}
+      >
+        <Header />
+        <MainBg />
+        <BuyNFT />
+      </Flex>
     </Flex>
   );
 }

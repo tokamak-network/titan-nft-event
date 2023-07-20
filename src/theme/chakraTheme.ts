@@ -41,7 +41,7 @@ const theme = extendTheme({
       },
 
       "html, body": {
-        backgroundColor: "#0F0F12",
+        backgroundColor: "#090909",
         color: "#FFFFFF",
       },
     }),
