@@ -8,7 +8,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { titan, titan_goerli, Mainnet } from "../provider/tokamakProvider";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [Mainnet, goerli, titan, titan_goerli],
+  [titan, titan_goerli],
   [publicProvider()]
 );
 

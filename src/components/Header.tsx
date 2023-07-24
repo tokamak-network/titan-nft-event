@@ -27,6 +27,7 @@ export function Header() {
       alignItems={"center"}
       px={"40px"}
       pos={"absolute"}
+      zIndex={100}
     >
       <Box h={"30px"}>
         <Image src={LOGO_IMAGE} alt={"LOGO_IMAGE"} />
