@@ -1,11 +1,23 @@
 import { atom } from "recoil";
+import { ShippingAddress } from "./type";
 
 export const nftCartList = atom<number[] | null>({
-  key: "nftCartListState", // unique ID (with respect to other atoms/selectors)
-  default: null, // default value (aka initial value)
+  key: "nftCartListState",
+  default: null,
 });
 
 export const nftSelect = atom<number | null>({
-  key: "nftSelectState", // unique ID (with respect to other atoms/selectors)
-  default: null, // default value (aka initial value)
+  key: "nftSelectState",
+  default: null,
+});
+
+export const shippingAddress = atom<ShippingAddress>({
+  key: "shippingAddressState",
+  default: {
+    zipCode: undefined,
+    baseAddress: undefined,
+    defaultAddress: undefined,
+    name: undefined,
+    phoneNumber: undefined,
+  },
 });

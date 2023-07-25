@@ -2,7 +2,7 @@ import { Flex, Text, Box } from "@chakra-ui/layout";
 import BG_IMAGE from "../assets/images/bg1.png";
 import NFT_CARDS_IMAGE from "../assets/images/visual_NFT-card_all.png";
 
-import CARD_IMAGE from "../assets/images/Card-all.svg";
+import CARD_IMAGE from "../assets/images/Card-all.png";
 import MERCHANDISE_IMAGE from "../assets/images/merchandise.png";
 import LINE_IMAGE from "../assets/images/line.png";
 
