@@ -4,17 +4,17 @@ import { useAccount } from "wagmi";
 import { useCallback } from "react";
 
 const GET_MY_NFTS = gql`
-  query nfts($address: String!) {
+  query Nfts($address: String!) {
     nfts(where: {owner: $address}) {
-      id
+      tokenID
     }
   }
 `;
 
 const GET_NOT_MY_NFTS = gql`
-  query nfts($address: String!) {
+  query Nfts($address: String!) {
     nfts(where: {owner_not: $address}) {
-      id
+      tokenID
     }
   }
 `;
@@ -24,27 +24,30 @@ export function useGetNFT() {
     variables: {
       address: FIRST_EVENT_CONTRACT,
     },
+    pollInterval: 5000,
   });
 
-  const { data: notOnSaledNFTs } = useQuery(GET_NOT_MY_NFTS, {
+  const { data: notOnSaledNFTs, error } = useQuery(GET_NOT_MY_NFTS, {
     variables: {
       address: FIRST_EVENT_CONTRACT,
     },
+    pollInterval: 5000,
   });
 
   const { address } = useAccount();
 
   const { data: myNFTs } = useQuery(GET_MY_NFTS, {
     variables: {
-      address: address,
+      address,
     },
+    pollInterval: 5000,
   });
 
   const isSold = useCallback(
-    (tokenId: number) => {
+    (paramTokenID: number) => {
       if (notOnSaledNFTs?.nfts) {
         const isAlreadySold = notOnSaledNFTs.nfts.map(
-          (e: { id: string }) => Number(e.id) === tokenId
+          (e: { tokenID: string }) => Number(e.tokenID) === paramTokenID
         );
         return isAlreadySold.includes(true);
       }

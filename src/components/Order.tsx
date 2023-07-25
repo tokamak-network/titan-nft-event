@@ -195,11 +195,11 @@ const PurcasedCards = () => {
       justify={"center"}
       mb={"55px"}
     >
-      {myNFTs?.nfts.map((nft: { id: string }) => {
+      {myNFTs?.nfts.map((nft: { tokenID: string }) => {
         return (
           <NFTcardForCart
-            key={nft.id}
-            tokenId={Number(nft.id)}
+            key={nft.tokenID}
+            tokenId={Number(nft.tokenID)}
             isPurchased={true}
           />
         );

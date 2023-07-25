@@ -13,8 +13,6 @@ import { nftCartList } from "../recoil/atomState";
 export function useNFTContract() {
   const cartList = useRecoilValue(nftCartList);
 
-  console.log(cartList);
-
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: FIRST_EVENT_CONTRACT,
     abi: FirstEvent.abi,
