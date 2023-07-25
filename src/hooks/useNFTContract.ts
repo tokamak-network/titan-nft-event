@@ -1,8 +1,8 @@
 import { useAccount, useContractRead, useContractWrite } from "wagmi";
-import NFTProxy from "../constants/abi/NFTProxy.json";
+import FirstEvent from "../constants/abi/FirstEvent.json";
 import ERC20 from "../constants/abi/ERC20.json";
 import {
-  NFTProxy_ADDRESS,
+  FIRST_EVENT_CONTRACT,
   TON_ADDRESS,
 } from "../constants/contracts/addresses";
 import { useErc20Allowance, useErc20Approve } from "./generated";
@@ -11,25 +11,33 @@ import { useRecoilValue } from "recoil";
 import { nftCartList } from "../recoil/atomState";
 
 export function useNFTContract() {
+  const cartList = useRecoilValue(nftCartList);
+
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: NFTProxy_ADDRESS,
-    abi: NFTProxy.abi,
-    functionName: "multiMint",
+    address: FIRST_EVENT_CONTRACT,
+    abi: FirstEvent.abi,
+    functionName: "multiPurchase",
+    args: [cartList],
   });
   const { address } = useAccount();
 
   const { data: allowance, error } = useErc20Allowance({
     address: TON_ADDRESS,
-    args: address && NFTProxy_ADDRESS ? [address, NFTProxy_ADDRESS] : undefined,
+    args:
+      address && FIRST_EVENT_CONTRACT
+        ? [address, FIRST_EVENT_CONTRACT]
+        : undefined,
     watch: true,
   });
+
   const amount = BigInt(50000000000000000000000);
   const { write: approve } = useErc20Approve({
     address: TON_ADDRESS,
-    args: NFTProxy_ADDRESS && amount ? [NFTProxy_ADDRESS, amount] : undefined,
+    args:
+      FIRST_EVENT_CONTRACT && amount
+        ? [FIRST_EVENT_CONTRACT, amount]
+        : undefined,
   });
-
-  const cartList = useRecoilValue(nftCartList);
 
   const isApproved = useMemo(() => {
     if (allowance !== undefined && cartList) {
@@ -44,7 +52,7 @@ export function useNFTContract() {
 
   const callToMint = useCallback(() => {
     write?.();
-  }, [cartList, write]);
+  }, [cartList, write, cartList]);
 
   const callToApprove = useCallback(() => {
     approve?.();

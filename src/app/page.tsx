@@ -5,6 +5,7 @@ import { Header } from "../components/Header";
 import { MainBg } from "../components/MainBg";
 import { BuyNFT } from "../components/BuyNFT";
 import { Order } from "../components/Order";
+import { Footer } from "../components/Footer";
 
 export default function Page() {
   return (
@@ -19,6 +20,7 @@ export default function Page() {
         <MainBg />
         <BuyNFT />
         <Order />
+        <Footer />
       </Flex>
     </Flex>
   );

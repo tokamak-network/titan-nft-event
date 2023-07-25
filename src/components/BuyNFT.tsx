@@ -24,8 +24,9 @@ const Buttons = () => {
   }, []);
 
   const buyBtnIsDisabled = useMemo(() => {
-    if (isApproved === false) return true;
-  }, [isApproved]);
+    if (nft === null || nft?.length === 0) return true;
+    return false;
+  }, [nft]);
 
   return (
     <Flex columnGap={"15px"}>
