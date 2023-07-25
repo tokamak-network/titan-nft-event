@@ -1,0 +1,5 @@
+sources:
+  - name: titan-nft
+    handler:
+      graphql:
+        endpoint: https://thegraph.titan-goerli.tokamak.network:/subgraphs/name/usgeeus/titan-nft-subgraph

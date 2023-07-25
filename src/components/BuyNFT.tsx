@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@chakra-ui/button";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Input, useNumberInput, Link, Wrap, Box } from "@chakra-ui/react";
@@ -12,7 +10,7 @@ import { useNFTContract } from "../hooks/useNFTContract";
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
   const [nft, setNft] = useRecoilState(nftCartList);
-  const { write } = useNFTContract();
+  const { callToMint, isApproved, callToApprove } = useNFTContract();
 
   const addToCard = useCallback(() => {
     if (nft && nftSelectState) return setNft([...nft, nftSelectState]);
@@ -22,12 +20,12 @@ const Buttons = () => {
   }, [nftSelectState, nft, setNft]);
 
   const addBtnIsDisabled = useMemo(() => {
-    return true;
+    return false;
   }, []);
 
   const buyBtnIsDisabled = useMemo(() => {
-    return true;
-  }, []);
+    if (isApproved === false) return true;
+  }, [isApproved]);
 
   return (
     <Flex columnGap={"15px"}>
@@ -35,6 +33,7 @@ const Buttons = () => {
         w={"180px"}
         h={"44px"}
         bgColor={"#2775ff"}
+        color={"#fff"}
         _hover={{}}
         _active={{}}
         borderRadius={"100px"}
@@ -48,14 +47,15 @@ const Buttons = () => {
         w={"180px"}
         h={"44px"}
         bgColor={"#2775ff"}
+        color={"#fff"}
         _hover={{}}
         _active={{}}
         borderRadius={"100px"}
         isDisabled={buyBtnIsDisabled}
         _disabled={{ bgColor: "#1e1e24", color: "#5a5a5a" }}
-        onClick={() => write?.()}
+        onClick={isApproved ? callToMint : callToApprove}
       >
-        Buy Now
+        {isApproved ? "Buy Now" : "Approve"}
       </Button>
     </Flex>
   );
