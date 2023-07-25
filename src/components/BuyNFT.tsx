@@ -6,6 +6,7 @@ import { nftCartList, nftSelect } from "../recoil/atomState";
 import { useCallback, useEffect, useMemo } from "react";
 import { NFTcardForCart } from "./NFTcard";
 import { useNFTContract } from "../hooks/useNFTContract";
+import { useGetNFT } from "../hooks/useSubgraph";
 
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
@@ -13,15 +14,30 @@ const Buttons = () => {
   const { callToMint, isApproved, callToApprove } = useNFTContract();
 
   const addToCard = useCallback(() => {
-    if (nft && nftSelectState) return setNft([...nft, nftSelectState]);
+    if (nft && nftSelectState) {
+      const duplicatedArr = [...nft, nftSelectState];
+      const uniqueArray = duplicatedArr.reduce((acc: number[], curr) => {
+        if (!acc.includes(curr)) {
+          acc.push(curr);
+        }
+        return acc;
+      }, []);
+      return setNft(uniqueArray);
+    }
     if (nft === null && nftSelectState) {
       return setNft([nftSelectState]);
     }
   }, [nftSelectState, nft, setNft]);
 
+  const [nftSelectedNumber] = useRecoilState(nftSelect);
+  const { isSold } = useGetNFT();
+
   const addBtnIsDisabled = useMemo(() => {
+    if (nftSelectedNumber && isSold(nftSelectedNumber)) {
+      return true;
+    }
     return false;
-  }, []);
+  }, [nftSelectedNumber, isSold]);
 
   const buyBtnIsDisabled = useMemo(() => {
     if (nft === null || nft?.length === 0) return true;
@@ -95,11 +111,23 @@ const InputSelector = () => {
 };
 
 const Warning = () => {
-  return (
-    <Text fontSize={13} color={"#e23738"}>
-      This number has been sold
-    </Text>
-  );
+  const [nftSelectedNumber] = useRecoilState(nftSelect);
+  const { isSold } = useGetNFT();
+
+  const isAlreadySold = useMemo(() => {
+    if (nftSelectedNumber && isSold(nftSelectedNumber)) {
+      return true;
+    }
+    return false;
+  }, [nftSelectedNumber, isSold]);
+
+  if (isAlreadySold)
+    return (
+      <Text fontSize={13} color={"#e23738"}>
+        This number has been sold
+      </Text>
+    );
+  return null;
 };
 
 const CardCarousell = () => {
@@ -118,23 +146,23 @@ const MoreList = () => {
 };
 
 const Cart = () => {
+  const nftCartListData = useRecoilValue(nftCartList);
+
   return (
     <Flex flexDir={"column"} mt={"60px"} rowGap={"30px"} alignItems={"center"}>
       <Text fontSize={15} fontWeight={600}>
         Shopping Cart
       </Text>
       <Wrap spacingX={"15px"} spacingY={"30px"} w={"750px"} justify={"center"}>
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
-        <NFTcardForCart />
+        {nftCartListData?.map((tokenId: number, index) => {
+          return (
+            <NFTcardForCart
+              key={`${index}_${tokenId}`}
+              tokenId={tokenId}
+              isPurchased={false}
+            />
+          );
+        })}
       </Wrap>
     </Flex>
   );

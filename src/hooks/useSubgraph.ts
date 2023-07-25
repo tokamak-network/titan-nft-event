@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { MINT_FIRST_EVENT_ADDRESS } from "../constants/contracts/addresses";
+import { FIRST_EVENT_CONTRACT } from "../constants/contracts/addresses";
 import { useAccount } from "wagmi";
+import { useCallback } from "react";
 
 const GET_MY_NFTS = gql`
   query nfts($address: String!) {
@@ -21,13 +22,13 @@ const GET_NOT_MY_NFTS = gql`
 export function useGetNFT() {
   const { data: onSaledNFTs } = useQuery(GET_MY_NFTS, {
     variables: {
-      address: MINT_FIRST_EVENT_ADDRESS,
+      address: FIRST_EVENT_CONTRACT,
     },
   });
 
   const { data: notOnSaledNFTs } = useQuery(GET_NOT_MY_NFTS, {
     variables: {
-      address: MINT_FIRST_EVENT_ADDRESS,
+      address: FIRST_EVENT_CONTRACT,
     },
   });
 
@@ -39,5 +40,17 @@ export function useGetNFT() {
     },
   });
 
-  return { onSaledNFTs, notOnSaledNFTs, myNFTs };
+  const isSold = useCallback(
+    (tokenId: number) => {
+      if (notOnSaledNFTs?.nfts) {
+        const isAlreadySold = notOnSaledNFTs.nfts.map(
+          (e: { id: string }) => Number(e.id) === tokenId
+        );
+        return isAlreadySold.includes(true);
+      }
+    },
+    [notOnSaledNFTs]
+  );
+
+  return { onSaledNFTs, notOnSaledNFTs, myNFTs, isSold };
 }

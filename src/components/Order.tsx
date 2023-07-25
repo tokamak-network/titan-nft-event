@@ -187,9 +187,6 @@ const Shipping = () => {
 const PurcasedCards = () => {
   const { myNFTs } = useGetNFT();
 
-  console.log("myNFTs");
-  console.log(myNFTs?.nfts);
-
   return (
     <Wrap
       spacingX={"15px"}
@@ -199,7 +196,13 @@ const PurcasedCards = () => {
       mb={"55px"}
     >
       {myNFTs?.nfts.map((nft: { id: string }) => {
-        return <NFTcardForCart key={nft.id} />;
+        return (
+          <NFTcardForCart
+            key={nft.id}
+            tokenId={Number(nft.id)}
+            isPurchased={true}
+          />
+        );
       })}
     </Wrap>
   );
