@@ -37,7 +37,7 @@ export function NFTcardForCart(props: NFTcardForCartProps) {
     <Flex flexDir={"column"} rowGap={"10px"}>
       <Box w={"60px"} h={"90px"} pos={"relative"}>
         <Image
-          src={CARD_IMAGE}
+          src={imagePaths[props.tokenId - 1]}
           alt={"CARD_IMAGE"}
           style={{ position: "absolute" }}
         />

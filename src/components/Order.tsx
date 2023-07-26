@@ -203,7 +203,7 @@ const PurcasedCards = () => {
       {myNFTs?.nfts.map((nft: { tokenID: string }) => {
         return (
           <NFTcardForCart
-            key={nft.tokenID}
+            key={Number(nft.tokenID)}
             tokenId={Number(nft.tokenID)}
             isPurchased={true}
           />
