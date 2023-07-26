@@ -14,34 +14,53 @@ import Image from "next/image";
 import useMediaView from "../hooks/useMediaView";
 
 const SectionMerchandise = () => {
+  const { mobileView } = useMediaView();
+
   return (
     <Flex flexDir={"column"} alignItems={"center"} textAlign={"center"}>
-      <Text fontSize={22} fontWeight={600} mb={"106px"}>
+      <Text fontSize={22} fontWeight={600} mb={["40px", "60px", "106px"]}>
         Free Merchandise for Each
       </Text>
-      <Image src={MERCHANDISE_IMAGE} alt={"MERCHANDISE_IMAGE"} />
+      <Box
+        w={mobileView ? "320px" : "400px"}
+        h={mobileView ? "235px" : "294px"}
+        bgColor={"#fff"}
+      ></Box>
+      {/* <Image src={MERCHANDISE_IMAGE} alt={"MERCHANDISE_IMAGE"} /> */}
       <Text color={"#aaaaaa"} mt={"12px"}>
         The MD images above are for illustrative purposes only.
       </Text>
-      <Text color={"#dddddd"} w={"400px"} mt={"62px"}>
-        100 NFTs will be issued, each featuring a unique design <br />
-        and serial number. <br /> You can apply this NFT as your profile picture
-        on the Tokamak webpage (coming soon).
+      <Text
+        color={"#dddddd"}
+        w={mobileView ? "340px" : "400px"}
+        mt={["16px", "16px", "62px"]}
+      >
+        After you purchase an NFT, we’ll ship you a package of merchandise,
+        including t-shirts, mugs, keychains, etc., with your purchased NFT image
+        imprinted on them.
       </Text>
     </Flex>
   );
 };
 
 const SectionNFT = () => {
-  const { pcView, tableView, mobileView } = useMediaView();
+  const { mobileView } = useMediaView();
 
   return (
     <Flex flexDir={"column"} alignItems={"center"} textAlign={"center"}>
       <Text fontSize={22} fontWeight={600} mb={"60px"}>
         100 limited NFTS
       </Text>
-      <Image src={pcView ? CARD_IMAGE : CARD_MOBILE_IMAGE} alt={"CARD_IMAGE"} />
-      <Text color={"#dddddd"} w={"400px"} mt={"45px"}>
+      <Box
+        w={mobileView ? "320px" : "400px"}
+        h={mobileView ? "312px" : "390px"}
+      >
+        <Image
+          src={mobileView ? CARD_MOBILE_IMAGE : CARD_IMAGE}
+          alt={"CARD_IMAGE"}
+        />
+      </Box>
+      <Text color={"#dddddd"} w={mobileView ? "340px" : "400px"} mt={"45px"}>
         100 NFTs will be issued, each featuring a unique design <br />
         and serial number. <br /> You can apply this NFT as your profile picture
         on the Tokamak webpage (coming soon).
@@ -96,7 +115,7 @@ export function MainBg() {
       </Flex>
       <Flex
         pos={"absolute"}
-        mt={["", "356px", "455px"]}
+        mt={["356px", "356px", "455px"]}
         w={"100%"}
         justifyContent={"center"}
       >

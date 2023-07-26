@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  Input,
-  Text,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text, Wrap } from "@chakra-ui/react";
 import { useGetNFT } from "../hooks/useSubgraph";
 import { NFTcardForCart } from "./NFTcard";
 import { openPostCode, shippingAddress } from "../recoil/atomState";
@@ -18,7 +10,6 @@ import { useAccount } from "wagmi";
 import { createNewShippingAddress } from "../firebase/controller";
 import { useShippingAddress } from "../hooks/useShippingAddress";
 import { PostCode } from "./PostCode";
-import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -174,7 +165,7 @@ const Shipping = () => {
     <Flex
       flexDir={"column"}
       textAlign={"center"}
-      w={"400px"}
+      w={["340px", "400px", "400px"]}
       alignItems={"center"}
     >
       <Text fontSize={22} fontWeight={600} h={"34px"} mb={"3px"}>
@@ -192,14 +183,13 @@ const Shipping = () => {
 
 const PurcasedCards = () => {
   const { myNFTs } = useGetNFT();
-  const { bp750px } = useMediaView();
-  const { width } = useWindowDimension();
 
   return (
     <Wrap
       spacingX={"15px"}
       spacingY={"30px"}
-      w={bp750px ? width - 20 : "750px"}
+      w={["100%", "100%", "750px"]}
+      px={["38px", "38px", ""]}
       justify={"center"}
       mb={"55px"}
     >

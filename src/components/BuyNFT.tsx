@@ -239,8 +239,6 @@ const MoreList = () => {
 
 const Cart = () => {
   const nftCartListData = useRecoilValue(nftCartList);
-  const { bp750px } = useMediaView();
-  const { width } = useWindowDimension();
 
   if (nftCartListData && nftCartListData?.length > 0) {
     return (
@@ -256,7 +254,8 @@ const Cart = () => {
         <Wrap
           spacingX={"15px"}
           spacingY={"30px"}
-          w={bp750px ? width - 20 : "750px"}
+          w={["100%", "100%", "750px"]}
+          px={["38px", "38px", ""]}
           justify={"center"}
         >
           {nftCartListData?.map((tokenId: number, index) => {

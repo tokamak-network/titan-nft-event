@@ -12,7 +12,7 @@ export default function Page() {
     <Flex w={"100%"} justifyContent={"center"}>
       <Flex
         flexDir={"column"}
-        w={"1280px"}
+        w={["100%", "100%", "1280px"]}
         alignItems={"center"}
         rowGap={"183px"}
       >
