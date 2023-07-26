@@ -18,6 +18,7 @@ import { useAccount } from "wagmi";
 import { createNewShippingAddress } from "../firebase/controller";
 import { useShippingAddress } from "../hooks/useShippingAddress";
 import { PostCode } from "./PostCode";
+import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -191,12 +192,14 @@ const Shipping = () => {
 
 const PurcasedCards = () => {
   const { myNFTs } = useGetNFT();
+  const { bp750px } = useMediaView();
+  const { width } = useWindowDimension();
 
   return (
     <Wrap
       spacingX={"15px"}
       spacingY={"30px"}
-      w={"750px"}
+      w={bp750px ? width - 20 : "750px"}
       justify={"center"}
       mb={"55px"}
     >

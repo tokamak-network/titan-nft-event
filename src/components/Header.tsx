@@ -3,15 +3,19 @@
 import { Box, Flex } from "@chakra-ui/layout";
 import Image from "next/image";
 import LOGO_IMAGE from "../assets/images/tn_logo.png";
+import LOGO_MOBILE_IMAGE from "../assets/images/tn_logo_mobile.svg";
+
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useCallback } from "react";
 import { trimAddress } from "../utils/trimAddress";
+import useMediaView from "../hooks/useMediaView";
 
 export function Header() {
   const { connector, isConnected, address } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
   const { disconnect } = useDisconnect();
+  const { pcView } = useMediaView();
 
   const onClickHandler = useCallback(() => {
     if (isConnected) return disconnect();
@@ -30,7 +34,10 @@ export function Header() {
       zIndex={100}
     >
       <Box h={"30px"}>
-        <Image src={LOGO_IMAGE} alt={"LOGO_IMAGE"} />
+        <Image
+          src={pcView ? LOGO_IMAGE : LOGO_MOBILE_IMAGE}
+          alt={"LOGO_IMAGE"}
+        />
       </Box>
       <Box
         w={"136px"}

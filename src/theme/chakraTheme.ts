@@ -5,7 +5,10 @@ const fonts = {
   TitilliumWeb: "Titillium Web",
 };
 
+const breakpoints = ["0px", "800px", "1200px"];
+
 const theme = extendTheme({
+  breakpoints,
   fonts: {
     body: fonts.TitilliumWeb,
   },

@@ -9,6 +9,7 @@ import { useNFTContract } from "../hooks/useNFTContract";
 import { useGetNFT } from "../hooks/useSubgraph";
 import Image from "next/image";
 import BG_IMAGE from "../assets/images/bg2.png";
+import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
 
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
@@ -238,6 +239,8 @@ const MoreList = () => {
 
 const Cart = () => {
   const nftCartListData = useRecoilValue(nftCartList);
+  const { bp750px } = useMediaView();
+  const { width } = useWindowDimension();
 
   if (nftCartListData && nftCartListData?.length > 0) {
     return (
@@ -253,7 +256,7 @@ const Cart = () => {
         <Wrap
           spacingX={"15px"}
           spacingY={"30px"}
-          w={"750px"}
+          w={bp750px ? width - 20 : "750px"}
           justify={"center"}
         >
           {nftCartListData?.map((tokenId: number, index) => {
