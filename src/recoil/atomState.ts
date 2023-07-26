@@ -21,3 +21,8 @@ export const shippingAddress = atom<ShippingAddress>({
     phoneNumber: undefined,
   },
 });
+
+export const openPostCode = atom<boolean>({
+  key: "openPostCodeState",
+  default: false,
+});

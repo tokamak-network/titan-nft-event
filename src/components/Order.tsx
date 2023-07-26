@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useGetNFT } from "../hooks/useSubgraph";
 import { NFTcardForCart } from "./NFTcard";
-import { shippingAddress } from "../recoil/atomState";
+import { openPostCode, shippingAddress } from "../recoil/atomState";
 import { ShippingAddress } from "../recoil/type";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useCallback, useMemo } from "react";
@@ -17,6 +17,7 @@ import { checkAllKeysHaveValues } from "../utils/checkAllKeysHavevalues";
 import { useAccount } from "wagmi";
 import { createNewShippingAddress } from "../firebase/controller";
 import { useShippingAddress } from "../hooks/useShippingAddress";
+import { PostCode } from "./PostCode";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -51,6 +52,7 @@ const InputComponent = (props: InputComponentProps) => {
       boxShadow={"none !important"}
       fontSize={15}
       onChange={(e) => onChangeHandler(e)}
+      value={shippingAddressData[inputKey]}
       defaultValue={value}
     />
   );
@@ -59,6 +61,7 @@ const InputComponent = (props: InputComponentProps) => {
 const InputAddress = () => {
   const { address } = useAccount();
   const { addressData } = useShippingAddress();
+  const [, setIsOpen] = useRecoilState(openPostCode);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -92,6 +95,7 @@ const InputAddress = () => {
 
   return (
     <Flex flexDir={"column"} w={"320px"}>
+      <PostCode />
       <form onSubmit={handleSubmit}>
         <Flex columnGap={"6px"}>
           <InputComponent
@@ -108,6 +112,7 @@ const InputAddress = () => {
             color={"#64646f"}
             _hover={{}}
             _active={{}}
+            onClick={() => setIsOpen(true)}
           >
             Find
           </Button>
