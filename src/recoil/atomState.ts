@@ -6,9 +6,9 @@ export const nftCartList = atom<number[] | null>({
   default: null,
 });
 
-export const nftSelect = atom<number | null>({
+export const nftSelect = atom<number>({
   key: "nftSelectState",
-  default: null,
+  default: 1,
 });
 
 export const shippingAddress = atom<ShippingAddress>({

@@ -1,10 +1,21 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import CARD_IMAGE from "../assets/cards/001.png";
-import { useCallback, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { nftCartList } from "../recoil/atomState";
 import { useGetNFT } from "../hooks/useSubgraph";
+import NFT_CARD_IMAGE from "../assets/nft-all/001.png";
+import { CSSProperties } from "react";
+
+const formatIndexNumber = (num: number) => {
+  if (num < 10) return `00${num}`;
+  if (num < 100) return `0${num}`;
+  return num;
+};
+
+const imagePaths = Array.from({ length: 100 }, (_, index) =>
+  require(`../assets/nft-all/${formatIndexNumber(index + 1)}.png`)
+);
 
 type NFTcardForCartProps = {
   tokenId: number;
@@ -62,5 +73,16 @@ export function NFTcardForCart(props: NFTcardForCartProps) {
         )}
       </Flex>
     </Flex>
+  );
+}
+
+export function NFTcardForCarousell(props: {
+  imageNumber: number;
+  style?: CSSProperties;
+}) {
+  return (
+    <Box w={"212px"} h={"320px"} style={props.style}>
+      <Image src={imagePaths[props.imageNumber]} alt={"NFT_CARD_IMAGE"} />
+    </Box>
   );
 }

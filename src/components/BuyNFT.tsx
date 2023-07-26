@@ -4,9 +4,11 @@ import { Input, useNumberInput, Link, Wrap, Box } from "@chakra-ui/react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { nftCartList, nftSelect } from "../recoil/atomState";
 import { useCallback, useEffect, useMemo } from "react";
-import { NFTcardForCart } from "./NFTcard";
+import { NFTcardForCarousell, NFTcardForCart } from "./NFTcard";
 import { useNFTContract } from "../hooks/useNFTContract";
 import { useGetNFT } from "../hooks/useSubgraph";
+import Image from "next/image";
+import BG_IMAGE from "../assets/images/bg2.png";
 
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
@@ -98,14 +100,53 @@ const InputSelector = () => {
     if (input.value) return setNft(Number(input.value));
   }, [input.value, setNft]);
 
+  // <Image src={MINUS_ICON} alt={"MINUS_ICON"} />
+
   return (
-    <Flex mb={"12px"}>
-      <Button {...dec}>-</Button>
+    <Flex mb={"12px"} w={"150px"} h={"35px"} zIndex={100}>
+      <Button
+        {...dec}
+        w={"40px"}
+        bgColor={"#fff"}
+        borderRadius={0}
+        borderLeftRadius={"19px"}
+        color={"#2775ff"}
+        _disabled={{
+          color: "#7e7e8f",
+        }}
+        fontSize={23}
+        _hover={{}}
+      >
+        -
+      </Button>
       <Input
         {...input}
+        w={"100%"}
         _focus={{ boxShadow: "none !important", borderColor: "none" }}
+        border={"none"}
+        bgColor={"#fff"}
+        borderRadius={0}
+        color={"#07070c"}
+        textAlign={"center"}
+        fontSize={20}
+        fontWeight={"bold"}
       />
-      <Button {...inc}>+</Button>
+      <Button
+        {...inc}
+        w={"40px"}
+        bgColor={"#fff"}
+        borderRadius={0}
+        borderRightRadius={"19px"}
+        color={"#2775ff"}
+        _disabled={{
+          color: "#7e7e8f",
+        }}
+        fontSize={23}
+        _hover={{}}
+        pb={"3px"}
+      >
+        +
+      </Button>
     </Flex>
   );
 };
@@ -123,7 +164,13 @@ const Warning = () => {
 
   if (isAlreadySold)
     return (
-      <Text fontSize={13} color={"#e23738"}>
+      <Text
+        fontSize={13}
+        color={"#e23738"}
+        pos={"absolute"}
+        top={"50px"}
+        zIndex={100}
+      >
         This number has been sold
       </Text>
     );
@@ -131,12 +178,56 @@ const Warning = () => {
 };
 
 const CardCarousell = () => {
-  return null;
+  const [nftSelectedNumber] = useRecoilState(nftSelect);
+
+  const formmatImageNumber = (num: number) => {
+    if (num === 101) {
+      return 0;
+    }
+    if (num === 102) {
+      return 1;
+    }
+    if (num === -1) {
+      return 99;
+    }
+    if (num === -2) {
+      return 98;
+    }
+    return num;
+  };
+
+  return (
+    <Flex mt={"50px"} columnGap={"30px"} pos={"relative"}>
+      <Box pos={"absolute"} left={"23%"} top={"-350px"}>
+        <Image src={BG_IMAGE} alt={"BG_IMAGE"} />
+      </Box>
+      <NFTcardForCarousell
+        imageNumber={formmatImageNumber(nftSelectedNumber - 3)}
+        style={{ opacity: 0.1 }}
+      />
+      <NFTcardForCarousell
+        imageNumber={formmatImageNumber(nftSelectedNumber - 2)}
+        style={{ opacity: 0.2 }}
+      />
+      <NFTcardForCarousell
+        imageNumber={formmatImageNumber(nftSelectedNumber - 1)}
+        style={{ zIndex: 100 }}
+      />
+      <NFTcardForCarousell
+        imageNumber={formmatImageNumber(nftSelectedNumber)}
+        style={{ opacity: 0.2 }}
+      />
+      <NFTcardForCarousell
+        imageNumber={formmatImageNumber(nftSelectedNumber + 1)}
+        style={{ opacity: 0.1 }}
+      />
+    </Flex>
+  );
 };
 
 const MoreList = () => {
   return (
-    <Text mt={"15px"} mb={"55px"} color={"#ddd"} fontSize={13}>
+    <Text mt={"15px"} mb={"55px"} color={"#ddd"} fontSize={13} zIndex={100}>
       See how limited edition NFTs are organized.{" "}
       <Link textDecor={"underline"} href="" isExternal>
         GO
@@ -148,42 +239,56 @@ const MoreList = () => {
 const Cart = () => {
   const nftCartListData = useRecoilValue(nftCartList);
 
-  return (
-    <Flex flexDir={"column"} mt={"60px"} rowGap={"30px"} alignItems={"center"}>
-      <Text fontSize={15} fontWeight={600}>
-        Shopping Cart
-      </Text>
-      <Wrap spacingX={"15px"} spacingY={"30px"} w={"750px"} justify={"center"}>
-        {nftCartListData?.map((tokenId: number, index) => {
-          return (
-            <NFTcardForCart
-              key={`${index}_${tokenId}`}
-              tokenId={tokenId}
-              isPurchased={false}
-            />
-          );
-        })}
-      </Wrap>
-    </Flex>
-  );
+  if (nftCartListData && nftCartListData?.length > 0) {
+    return (
+      <Flex
+        flexDir={"column"}
+        mt={"60px"}
+        rowGap={"30px"}
+        alignItems={"center"}
+      >
+        <Text fontSize={15} fontWeight={600}>
+          Shopping Cart
+        </Text>
+        <Wrap
+          spacingX={"15px"}
+          spacingY={"30px"}
+          w={"750px"}
+          justify={"center"}
+        >
+          {nftCartListData?.map((tokenId: number, index) => {
+            return (
+              <NFTcardForCart
+                key={`${index}_${tokenId}`}
+                tokenId={tokenId}
+                isPurchased={false}
+              />
+            );
+          })}
+        </Wrap>
+      </Flex>
+    );
+  }
+
+  return null;
 };
 
 const CardSection = () => {
   return (
-    <>
+    <Flex flexDir={"column"} pos={"relative"} alignItems={"center"}>
       <InputSelector />
       <Warning />
       <CardCarousell />
       <MoreList />
       <Buttons />
       <Cart />
-    </>
+    </Flex>
   );
 };
 
 const Title = () => {
   return (
-    <Flex flexDir={"column"} rowGap={"6px"} mb={"30px"}>
+    <Flex flexDir={"column"} rowGap={"6px"} mb={"30px"} zIndex={100}>
       <Text fontSize={40} fontWeight={"bold"}>
         Buy an NFT
       </Text>
