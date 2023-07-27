@@ -8,25 +8,32 @@ export function Footer() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const { pcView } = useMediaView();
+  const { mobileView } = useMediaView();
 
   return (
     <Box w={["100%", "100%", "1200px"]} px={["", "30px", ""]}>
       <Flex
         w={"100%"}
-        h={"101px"}
+        h={mobileView ? "113px" : "101px"}
         borderTop={"1px solid #313442"}
-        justifyContent={"space-between"}
+        justifyContent={mobileView ? "" : "space-between"}
+        alignItems={"center"}
+        color={"#9a9aaf"}
+        fontSize={16}
+        flexDir={mobileView ? "column" : "row"}
       >
-        <Text mt={"36px"} color={"#9a9aaf"} fontSize={16}>
-          © 2023 Tokamak Network
-        </Text>
-        <Image
-          src={TOP_ARROW_ICON}
-          alt={"TOP_ARROW_ICON"}
-          style={{ cursor: "pointer" }}
-          onClick={() => handleScrollToTop()}
-        />
+        <Text mt={mobileView ? "29px" : "36px"}>© 2023 Tokamak Network</Text>
+        <Flex alignItems={"center"} columnGap={"30px"}>
+          <Text>Contact : alex.k@onther.io</Text>
+          {!mobileView && (
+            <Image
+              src={TOP_ARROW_ICON}
+              alt={"TOP_ARROW_ICON"}
+              style={{ cursor: "pointer" }}
+              onClick={() => handleScrollToTop()}
+            />
+          )}
+        </Flex>
       </Flex>
     </Box>
   );

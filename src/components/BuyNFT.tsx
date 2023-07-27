@@ -198,7 +198,13 @@ const CardCarousell = () => {
   };
 
   return (
-    <Flex mt={"50px"} columnGap={"30px"} pos={"relative"}>
+    <Flex
+      w={"100%"}
+      h={"321px"}
+      mt={"50px"}
+      columnGap={"30px"}
+      pos={"relative"}
+    >
       <Box pos={"absolute"} left={"23%"} top={"-350px"}>
         <Image src={BG_IMAGE} alt={"BG_IMAGE"} />
       </Box>
@@ -239,6 +245,8 @@ const MoreList = () => {
 
 const Cart = () => {
   const nftCartListData = useRecoilValue(nftCartList);
+  const { bp750px } = useMediaView();
+  const { width } = useWindowDimension();
 
   if (nftCartListData && nftCartListData?.length > 0) {
     return (
@@ -254,7 +262,7 @@ const Cart = () => {
         <Wrap
           spacingX={"15px"}
           spacingY={"30px"}
-          w={["100%", "100%", "750px"]}
+          w={bp750px ? width : "750px"}
           px={["38px", "38px", ""]}
           justify={"center"}
         >

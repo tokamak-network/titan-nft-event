@@ -1,5 +1,7 @@
 import { Flex, Text, Box } from "@chakra-ui/layout";
 import BG_IMAGE from "../assets/images/bg1.png";
+import BG_TABLET_IMAGE from "../assets/images/bg1_tablet.png";
+import BG_MOBILE_IMAGE from "../assets/images/bg1_mobile.png";
 
 import NFT_CARDS_IMAGE from "../assets/images/visual_NFT-card_all.png";
 import NFT_CARDS_MOBILE_IMAGE from "../assets/images/visual_NFT-card_all@2x_tablet.png";
@@ -79,7 +81,7 @@ const MiddleSection = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
       px={"120px"}
-      mt={"212px"}
+      mt={["212px", "100px", "52px"]}
       rowGap={pcView ? undefined : "120px"}
     >
       <SectionNFT />
@@ -93,36 +95,68 @@ export function MainBg() {
   const { pcView, tableView, mobileView } = useMediaView();
   return (
     <Flex w={"100%"} flexDir={"column"} pos={"relative"}>
-      <Image src={BG_IMAGE} alt={"BG_IMAGE"} />
-      <Flex
-        pos={"absolute"}
-        mt={"217px"}
-        justifyContent={"center"}
-        textAlign={"center"}
-        w={"100%"}
-        flexDir={"column"}
-      >
-        <Text
-          fontSize={[39, 39, 65]}
-          fontWeight={"bold"}
-          h={["", "59px", "99px"]}
+      <Flex flex={"column"} h={["659px", "579px", "927px"]}>
+        <Flex w={"100%"} justifyContent={"center"} alignItems={"baseline"}>
+          <Flex
+            justifyContent={"center"}
+            alignItems={"center"}
+            mt={["", "", ""]}
+            w={["100%", "800px", "100%"]}
+            h={["650px", "480px", "768px"]}
+            overflow={"hidden"}
+          >
+            <Image
+              src={
+                // BG_IMAGE
+                pcView
+                  ? BG_IMAGE
+                  : // : BG_TABLET_IMAGE
+                  tableView
+                  ? BG_TABLET_IMAGE
+                  : BG_MOBILE_IMAGE
+              }
+              alt={"BG_IMAGE"}
+              style={{ objectFit: "fill", width: "100%", height: "100%" }}
+            />
+          </Flex>
+        </Flex>
+        <Flex
+          pos={"absolute"}
+          mt={["160px", "178px", "217px"]}
+          justifyContent={"center"}
+          textAlign={"center"}
+          w={"100%"}
+          flexDir={"column"}
         >
-          Only 100 Limited edition NFTs
-        </Text>
-        <Text fontSize={[15, 15, 20]} opacity={0.8}>
-          to celebrate the opening of Titan L2{" "}
-        </Text>
-      </Flex>
-      <Flex
-        pos={"absolute"}
-        mt={["356px", "356px", "455px"]}
-        w={"100%"}
-        justifyContent={"center"}
-      >
-        <Image
-          src={pcView ? NFT_CARDS_IMAGE : NFT_CARDS_MOBILE_IMAGE}
-          alt={"NFT_CARDS_IMAGE"}
-        />
+          <Text
+            fontSize={[39, 39, 65]}
+            fontWeight={"bold"}
+            h={["", "59px", "99px"]}
+          >
+            Only 100 {mobileView && <br />} Limited edition{" "}
+            {mobileView && <br />} NFTs
+          </Text>
+          <Text fontSize={[15, 15, 20]} opacity={0.8}>
+            to celebrate the opening of Titan L2{" "}
+          </Text>
+        </Flex>
+        <Flex
+          w={"100%"}
+          justifyContent={"center"}
+          pos={"absolute"}
+          mt={["356px", "356px", "455px"]}
+        >
+          <Flex
+            w={["100%", "100%", "1060px"]}
+            // h={["265px", "265px", "442px"]}
+            justifyContent={"center"}
+          >
+            <Image
+              src={pcView ? NFT_CARDS_IMAGE : NFT_CARDS_MOBILE_IMAGE}
+              alt={"NFT_CARDS_IMAGE"}
+            />
+          </Flex>
+        </Flex>
       </Flex>
       <MiddleSection />
     </Flex>

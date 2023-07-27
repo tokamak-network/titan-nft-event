@@ -81,7 +81,11 @@ export function NFTcardForCarousell(props: {
 }) {
   return (
     <Box w={"212px"} h={"320px"} style={props.style}>
-      <Image src={imagePaths[props.imageNumber]} alt={"NFT_CARD_IMAGE"} />
+      <Image
+        src={imagePaths[props.imageNumber]}
+        alt={"NFT_CARD_IMAGE"}
+        priority={true}
+      />
     </Box>
   );
 }
