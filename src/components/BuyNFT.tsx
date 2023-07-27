@@ -74,8 +74,20 @@ const Buttons = () => {
         isDisabled={buyBtnIsDisabled}
         _disabled={{ bgColor: "#1e1e24", color: "#5a5a5a" }}
         onClick={isApproved ? callToMint : callToApprove}
+        lineHeight={1.53}
       >
-        {isApproved ? "Buy Now" : "Approve"}
+        <Text>{isApproved ? "Buy Now" : "Approve"}</Text>
+        {nft && (
+          <Flex
+            fontWeight={"normal"}
+            ml={"5px"}
+            columnGap={"5px"}
+            alignItems={"center"}
+          >
+            <Text fontSize={12}>|</Text>
+            <Text>{nft.length * 30} TON</Text>
+          </Flex>
+        )}
       </Button>
     </Flex>
   );

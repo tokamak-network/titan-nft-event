@@ -32,6 +32,7 @@ export function PostCode() {
       baseAddress: address,
       zipCode: zonecode,
     });
+    onClose();
   };
 
   return (

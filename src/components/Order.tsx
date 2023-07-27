@@ -189,7 +189,7 @@ const PurcasedCards = () => {
       spacingX={"15px"}
       spacingY={"30px"}
       w={["100%", "100%", "750px"]}
-      px={["38px", "38px", ""]}
+      px={["38px", "38px", "0px"]}
       justify={"center"}
       mb={"55px"}
     >
