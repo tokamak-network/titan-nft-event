@@ -158,7 +158,7 @@ const InputAddress = () => {
             _disabled={{ bgColor: "#1e1e24", color: "#5a5a5a" }}
             type="submit"
           >
-            Save
+            {addressData ? "Edit" : "Save"}
           </Button>
         </Flex>
       </form>

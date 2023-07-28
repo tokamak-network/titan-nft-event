@@ -10,6 +10,7 @@ import { useGetNFT } from "../hooks/useSubgraph";
 import Image from "next/image";
 import BG_IMAGE from "../assets/images/bg2.png";
 import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
+import { useAccount } from "wagmi";
 
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
@@ -34,6 +35,7 @@ const Buttons = () => {
 
   const [nftSelectedNumber] = useRecoilState(nftSelect);
   const { isSold } = useGetNFT();
+  const { isConnected } = useAccount();
 
   const addBtnIsDisabled = useMemo(() => {
     if (nftSelectedNumber && isSold(nftSelectedNumber)) {
@@ -76,7 +78,7 @@ const Buttons = () => {
         onClick={isApproved ? callToMint : callToApprove}
         lineHeight={1.53}
       >
-        <Text>{isApproved ? "Buy Now" : "Approve"}</Text>
+        <Text>{!isConnected || isApproved ? "Buy Now" : "Approve"}</Text>
         {nft && (
           <Flex
             fontWeight={"normal"}
