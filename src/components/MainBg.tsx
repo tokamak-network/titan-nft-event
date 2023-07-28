@@ -62,7 +62,7 @@ const SectionNFT = () => {
           alt={"CARD_IMAGE"}
         />
       </Box>
-      <Text color={"#dddddd"} w={mobileView ? "340px" : "400px"} mt={"45px"}>
+      <Text color={"#dddddd"} w={mobileView ? "340px" : "400px"} mt={"44px"}>
         100 NFTs will be issued, each featuring a unique design <br />
         and serial number. <br /> You can apply this NFT as your profile picture
         on the Tokamak webpage (coming soon).

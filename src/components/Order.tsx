@@ -3,13 +3,16 @@ import { useGetNFT } from "../hooks/useSubgraph";
 import { NFTcardForCart } from "./NFTcard";
 import { openPostCode, shippingAddress } from "../recoil/atomState";
 import { ShippingAddress } from "../recoil/type";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { useCallback, useMemo } from "react";
+import { useRecoilState } from "recoil";
+import { useState } from "react";
 import { checkAllKeysHaveValues } from "../utils/checkAllKeysHavevalues";
 import { useAccount } from "wagmi";
 import { createNewShippingAddress } from "../firebase/controller";
 import { useShippingAddress } from "../hooks/useShippingAddress";
 import { PostCode } from "./PostCode";
+import { useTimestampcomparator } from "../hooks/useTimestampComparator";
+import ARROW_ICON from "../assets/icons/arrow-right.svg";
+import Image from "next/image";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -171,7 +174,7 @@ const Shipping = () => {
       <Text fontSize={22} fontWeight={600} h={"34px"} mb={"3px"}>
         Shipping address
       </Text>
-      <Text fontSize={15} color={"#aaa"} lineHeight={"1.53"} mb={"30px"}>
+      <Text fontSize={15} color={"#aaa"} lineHeight={"1.53"} mb={"36px"}>
         A free merchandise package will be sent for each NFT to the person who
         owns it as of the end of the event. (But only if the shipping address
         has been entered)
@@ -191,7 +194,7 @@ const PurcasedCards = () => {
       w={["100%", "100%", "750px"]}
       px={["38px", "38px", "0px"]}
       justify={"center"}
-      mb={"55px"}
+      mb={"25px"}
     >
       {myNFTs?.nfts.map((nft: { tokenID: string }) => {
         return (
@@ -203,6 +206,59 @@ const PurcasedCards = () => {
         );
       })}
     </Wrap>
+  );
+};
+
+const SaleRoundInfo = (props: {
+  round: "1st" | "2nd" | "3rd";
+  isActive: boolean;
+}) => {
+  const { round, isActive } = props;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const endTime =
+    round === "1st"
+      ? "Monday, August 7 2023, 12:00 PM (KST)"
+      : round === "2nd"
+      ? "2nd :Monday, August 14 2023, 12:00 PM (KST)"
+      : "Monday, August 21 2023, 12:00 PM (KST)";
+
+  return (
+    <Flex flexDir={"column"} rowGap={"30px"} alignItems={"center"}>
+      <Flex
+        justifyContent={"space-between"}
+        columnGap={"6px"}
+        onClick={() => setIsOpen(!isOpen)}
+        cursor={"pointer"}
+      >
+        <Text fontSize={15} color={isActive ? "#ffff07" : "#aaa"}>
+          {round} : {endTime}
+        </Text>
+        <Image src={ARROW_ICON} alt={"ARROW_ICON"} />
+      </Flex>
+      {isOpen && <PurcasedCards />}
+    </Flex>
+  );
+};
+
+const SaleRound = () => {
+  const {
+    isFirstTimestampPassed,
+    isSecondTimestampPassed,
+    isThirdTimestampPassed,
+  } = useTimestampcomparator();
+
+  return (
+    <Flex rowGap={"6px"} flexDir={"column"} mb={"55px"}>
+      {!isFirstTimestampPassed && (
+        <SaleRoundInfo round="1st" isActive={isFirstTimestampPassed} />
+      )}
+      {!isSecondTimestampPassed && (
+        <SaleRoundInfo round="2nd" isActive={isSecondTimestampPassed} />
+      )}
+      {isThirdTimestampPassed && (
+        <SaleRoundInfo round="3rd" isActive={isThirdTimestampPassed} />
+      )}
+    </Flex>
   );
 };
 
@@ -220,7 +276,7 @@ export function Order() {
   return (
     <Flex flexDir={"column"} alignItems={"center"}>
       <Title />
-      <PurcasedCards />
+      <SaleRound />
       <Shipping />
     </Flex>
   );

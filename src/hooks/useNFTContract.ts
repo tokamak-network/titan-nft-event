@@ -21,7 +21,11 @@ export function useNFTContract() {
   });
   const { address } = useAccount();
 
-  const { data: allowance, error } = useErc20Allowance({
+  const {
+    data: allowance,
+    error,
+    isLoading: approveIsLoading,
+  } = useErc20Allowance({
     address: TON_ADDRESS,
     args:
       address && FIRST_EVENT_CONTRACT
@@ -58,5 +62,5 @@ export function useNFTContract() {
     approve?.();
   }, [approve]);
 
-  return { callToMint, isLoading, isApproved, callToApprove };
+  return { callToMint, isLoading, isApproved, callToApprove, approveIsLoading };
 }

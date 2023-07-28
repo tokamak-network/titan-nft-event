@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import CARD_IMAGE from "../assets/cards/001.png";
 import { useRecoilState } from "recoil";
 import { nftCartList } from "../recoil/atomState";
 import { useGetNFT } from "../hooks/useSubgraph";
