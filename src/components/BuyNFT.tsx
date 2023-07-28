@@ -15,7 +15,8 @@ import { useAccount } from "wagmi";
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
   const [nft, setNft] = useRecoilState(nftCartList);
-  const { callToMint, isApproved, callToApprove } = useNFTContract();
+  const { callToMint, isApproved, callToApprove, saleIsStart } =
+    useNFTContract();
 
   const addToCard = useCallback(() => {
     if (nft && nftSelectState) {
@@ -45,9 +46,9 @@ const Buttons = () => {
   }, [nftSelectedNumber, isSold]);
 
   const buyBtnIsDisabled = useMemo(() => {
-    if (nft === null || nft?.length === 0) return true;
+    if (nft === null || nft?.length === 0 || !saleIsStart) return true;
     return false;
-  }, [nft]);
+  }, [nft, saleIsStart]);
 
   return (
     <Flex columnGap={"15px"}>
@@ -79,7 +80,7 @@ const Buttons = () => {
         lineHeight={1.53}
       >
         <Text>{!isConnected || isApproved ? "Buy Now" : "Approve"}</Text>
-        {nft && (
+        {nft && nft.length > 0 && isApproved && (
           <Flex
             fontWeight={"normal"}
             ml={"5px"}

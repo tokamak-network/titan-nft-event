@@ -6,7 +6,7 @@ import {
   TON_ADDRESS,
 } from "../constants/contracts/addresses";
 import { useErc20Allowance, useErc20Approve } from "./generated";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { nftCartList } from "../recoil/atomState";
 
@@ -19,6 +19,13 @@ export function useNFTContract() {
     functionName: "multiPurchase",
     args: [cartList],
   });
+
+  const { data: startTime } = useContractRead({
+    address: FIRST_EVENT_CONTRACT,
+    abi: FirstEvent.abi,
+    functionName: "startTime",
+  });
+
   const { address } = useAccount();
 
   const {
@@ -54,6 +61,27 @@ export function useNFTContract() {
     }
   }, [allowance, cartList]);
 
+  const [saleIsStart, setSaleIsStart] = useState<boolean>(false);
+
+  useEffect(() => {
+    const compareTimestamp = () => {
+      if (startTime) {
+        if (Number(startTime === 0)) {
+          return setSaleIsStart(false);
+        }
+        const nowTimestamp = Math.floor(new Date().getTime() / 1000);
+
+        return setSaleIsStart(nowTimestamp >= Number(startTime));
+      }
+      return setSaleIsStart(false);
+    };
+
+    const intervalId = setInterval(compareTimestamp, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [startTime]);
+
   const callToMint = useCallback(() => {
     write?.();
   }, [write]);
@@ -62,5 +90,12 @@ export function useNFTContract() {
     approve?.();
   }, [approve]);
 
-  return { callToMint, isLoading, isApproved, callToApprove, approveIsLoading };
+  return {
+    callToMint,
+    isLoading,
+    isApproved,
+    callToApprove,
+    approveIsLoading,
+    saleIsStart,
+  };
 }
