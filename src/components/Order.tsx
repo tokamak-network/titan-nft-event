@@ -172,7 +172,7 @@ const Shipping = () => {
       alignItems={"center"}
     >
       <Text fontSize={22} fontWeight={600} h={"34px"} mb={"3px"}>
-        Shipping address
+        Batch shipping address
       </Text>
       <Text fontSize={15} color={"#aaa"} lineHeight={"1.53"} mb={"36px"}>
         A free merchandise package will be sent for each NFT to the person who
@@ -219,7 +219,7 @@ const SaleRoundInfo = (props: {
     round === "1st"
       ? "Monday, August 7 2023, 12:00 PM (KST)"
       : round === "2nd"
-      ? "2nd :Monday, August 14 2023, 12:00 PM (KST)"
+      ? "Monday, August 14 2023, 12:00 PM (KST)"
       : "Monday, August 21 2023, 12:00 PM (KST)";
 
   return (
@@ -249,14 +249,15 @@ const SaleRound = () => {
 
   return (
     <Flex rowGap={"6px"} flexDir={"column"} mb={"55px"}>
-      {!isFirstTimestampPassed && (
-        <SaleRoundInfo round="1st" isActive={isFirstTimestampPassed} />
+      <SaleRoundInfo round="1st" isActive={!isFirstTimestampPassed} />
+      {isFirstTimestampPassed && (
+        <SaleRoundInfo
+          round="2nd"
+          isActive={!isSecondTimestampPassed && isFirstTimestampPassed}
+        />
       )}
-      {!isSecondTimestampPassed && (
-        <SaleRoundInfo round="2nd" isActive={isSecondTimestampPassed} />
-      )}
-      {isThirdTimestampPassed && (
-        <SaleRoundInfo round="3rd" isActive={isThirdTimestampPassed} />
+      {isSecondTimestampPassed && isFirstTimestampPassed && (
+        <SaleRoundInfo round="3rd" isActive={!isThirdTimestampPassed} />
       )}
     </Flex>
   );
