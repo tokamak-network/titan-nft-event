@@ -96,6 +96,7 @@ type NFT {
   tokenID: BigInt
   owner: Bytes
   ownerHistory: [Bytes!]
+  timeHistory: [BigInt!]
   attribute: Bytes
 }
 
@@ -132,6 +133,12 @@ input NFT_filter {
   ownerHistory_contains_nocase: [Bytes!]
   ownerHistory_not_contains: [Bytes!]
   ownerHistory_not_contains_nocase: [Bytes!]
+  timeHistory: [BigInt!]
+  timeHistory_not: [BigInt!]
+  timeHistory_contains: [BigInt!]
+  timeHistory_contains_nocase: [BigInt!]
+  timeHistory_not_contains: [BigInt!]
+  timeHistory_not_contains_nocase: [BigInt!]
   attribute: Bytes
   attribute_not: Bytes
   attribute_gt: Bytes
@@ -153,6 +160,7 @@ enum NFT_orderBy {
   tokenID
   owner
   ownerHistory
+  timeHistory
   attribute
 }
 

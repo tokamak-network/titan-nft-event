@@ -116,6 +116,7 @@ export type NFT = {
   tokenID?: Maybe<Scalars['BigInt']>;
   owner?: Maybe<Scalars['Bytes']>;
   ownerHistory?: Maybe<Array<Scalars['Bytes']>>;
+  timeHistory?: Maybe<Array<Scalars['BigInt']>>;
   attribute?: Maybe<Scalars['Bytes']>;
 };
 
@@ -152,6 +153,12 @@ export type NFT_filter = {
   ownerHistory_contains_nocase?: InputMaybe<Array<Scalars['Bytes']>>;
   ownerHistory_not_contains?: InputMaybe<Array<Scalars['Bytes']>>;
   ownerHistory_not_contains_nocase?: InputMaybe<Array<Scalars['Bytes']>>;
+  timeHistory?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
   attribute?: InputMaybe<Scalars['Bytes']>;
   attribute_not?: InputMaybe<Scalars['Bytes']>;
   attribute_gt?: InputMaybe<Scalars['Bytes']>;
@@ -173,6 +180,7 @@ export type NFT_orderBy =
   | 'tokenID'
   | 'owner'
   | 'ownerHistory'
+  | 'timeHistory'
   | 'attribute';
 
 /** Defines the order direction, either ascending or descending */
@@ -485,6 +493,7 @@ export type NFTResolvers<ContextType = MeshContext, ParentType extends Resolvers
   tokenID?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   owner?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
   ownerHistory?: Resolver<Maybe<Array<ResolversTypes['Bytes']>>, ParentType, ContextType>;
+  timeHistory?: Resolver<Maybe<Array<ResolversTypes['BigInt']>>, ParentType, ContextType>;
   attribute?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -583,7 +592,7 @@ const titanNftTransforms = [];
 const additionalTypeDefs = [] as any[];
 const titanNftHandler = new GraphqlHandler({
               name: "titan-nft",
-              config: {"endpoint":"https://thegraph.titan-goerli.tokamak.network:/subgraphs/name/usgeeus/titan-nft-subgraph"},
+              config: {"endpoint":"https://thegraph.titan-goerli.tokamak.network:/subgraphs/name/tokamak/titan-nft-subgraph"},
               baseDir,
               cache,
               pubsub,

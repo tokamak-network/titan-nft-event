@@ -12,7 +12,10 @@ import { useShippingAddress } from "../hooks/useShippingAddress";
 import { PostCode } from "./PostCode";
 import { useTimestampcomparator } from "../hooks/useTimestampComparator";
 import ARROW_ICON from "../assets/icons/arrow-right.svg";
+import ARROW_YELLOW_ICON from "../assets/icons/arrow-yellow.svg";
 import Image from "next/image";
+import { Round_T, checkSaleRound } from "../utils/checkSaleRound";
+import { motion } from "framer-motion";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -184,7 +187,7 @@ const Shipping = () => {
   );
 };
 
-const PurcasedCards = () => {
+const PurcasedCards = (props: { round: Round_T }) => {
   const { myNFTs } = useGetNFT();
 
   return (
@@ -196,7 +199,12 @@ const PurcasedCards = () => {
       justify={"center"}
       mb={"25px"}
     >
-      {myNFTs?.nfts.map((nft: { tokenID: string }) => {
+      {myNFTs?.nfts.map((nft: { tokenID: string; timeHistory: number[] }) => {
+        const soldTime = nft.timeHistory[1];
+        const saleRound = checkSaleRound(soldTime);
+
+        if (props.round !== saleRound) return null;
+
         return (
           <NFTcardForCart
             key={Number(nft.tokenID)}
@@ -209,10 +217,7 @@ const PurcasedCards = () => {
   );
 };
 
-const SaleRoundInfo = (props: {
-  round: "1st" | "2nd" | "3rd";
-  isActive: boolean;
-}) => {
+const SaleRoundInfo = (props: { round: Round_T; isActive: boolean }) => {
   const { round, isActive } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const endTime =
@@ -229,13 +234,22 @@ const SaleRoundInfo = (props: {
         columnGap={"6px"}
         onClick={() => setIsOpen(!isOpen)}
         cursor={"pointer"}
+        alignItems={"center"}
       >
         <Text fontSize={15} color={isActive ? "#ffff07" : "#aaa"}>
           {round} : {endTime}
         </Text>
-        <Image src={ARROW_ICON} alt={"ARROW_ICON"} />
+        <motion.div
+          animate={{ rotate: isOpen ? 90 : 0 }} // Rotate the element by 90 degrees
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          <Image
+            src={isActive ? ARROW_YELLOW_ICON : ARROW_ICON}
+            alt={"ARROW_ICON"}
+          />
+        </motion.div>
       </Flex>
-      {isOpen && <PurcasedCards />}
+      {isOpen && <PurcasedCards round={round} />}
     </Flex>
   );
 };

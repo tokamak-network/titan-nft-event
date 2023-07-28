@@ -98,6 +98,7 @@ export type NFT = {
   tokenID?: Maybe<Scalars['BigInt']>;
   owner?: Maybe<Scalars['Bytes']>;
   ownerHistory?: Maybe<Array<Scalars['Bytes']>>;
+  timeHistory?: Maybe<Array<Scalars['BigInt']>>;
   attribute?: Maybe<Scalars['Bytes']>;
 };
 
@@ -134,6 +135,12 @@ export type NFT_filter = {
   ownerHistory_contains_nocase?: InputMaybe<Array<Scalars['Bytes']>>;
   ownerHistory_not_contains?: InputMaybe<Array<Scalars['Bytes']>>;
   ownerHistory_not_contains_nocase?: InputMaybe<Array<Scalars['Bytes']>>;
+  timeHistory?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  timeHistory_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
   attribute?: InputMaybe<Scalars['Bytes']>;
   attribute_not?: InputMaybe<Scalars['Bytes']>;
   attribute_gt?: InputMaybe<Scalars['Bytes']>;
@@ -155,6 +162,7 @@ export type NFT_orderBy =
   | 'tokenID'
   | 'owner'
   | 'ownerHistory'
+  | 'timeHistory'
   | 'attribute';
 
 /** Defines the order direction, either ascending or descending */

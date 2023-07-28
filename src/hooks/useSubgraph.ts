@@ -7,6 +7,7 @@ const GET_MY_NFTS = gql`
   query Nfts($address: String!) {
     nfts(where: {owner: $address}) {
       tokenID
+      timeHistory
     }
   }
 `;
@@ -15,6 +16,7 @@ const GET_NOT_MY_NFTS = gql`
   query Nfts($address: String!) {
     nfts(where: {owner_not: $address}) {
       tokenID
+      timeHistory
     }
   }
 `;
