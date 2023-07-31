@@ -23,12 +23,12 @@ const SectionMerchandise = () => {
       <Text fontSize={22} fontWeight={600} mb={["40px", "60px", "106px"]}>
         Free Merchandise for Each
       </Text>
-      <Box
+      {/* <Box
         w={mobileView ? "320px" : "400px"}
         h={mobileView ? "235px" : "294px"}
         bgColor={"#fff"}
-      ></Box>
-      {/* <Image src={MERCHANDISE_IMAGE} alt={"MERCHANDISE_IMAGE"} /> */}
+      ></Box> */}
+      <Image src={MERCHANDISE_IMAGE} alt={"MERCHANDISE_IMAGE"} />
       <Text color={"#aaaaaa"} mt={"12px"}>
         The MD images above are for illustrative purposes only.
       </Text>

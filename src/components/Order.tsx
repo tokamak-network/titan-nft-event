@@ -68,13 +68,15 @@ const InputAddress = () => {
     const baseAddress = event.target[2].value;
     const defaultAddress = event.target[3].value;
     const name = event.target[4].value;
-    const phoneNumber = event.target[5].value;
+    const email = event.target[5].value;
+    const phoneNumber = event.target[6].value;
 
     const paramsToSave = {
       zipCode,
       baseAddress,
       defaultAddress,
       name,
+      email,
       phoneNumber,
     };
 
@@ -132,6 +134,12 @@ const InputAddress = () => {
             Recipient’s name
           </Text>
           <InputComponent inputKey="name" value={addressData?.name} />
+        </Flex>
+        <Flex flexDir={"column"} rowGap={"6px"} textAlign={"left"} mt={"21px"}>
+          <Text fontSize={15} color={"#ddd"}>
+            Email
+          </Text>
+          <InputComponent inputKey="email" value={addressData?.email} />
         </Flex>
         <Flex flexDir={"column"} rowGap={"6px"} textAlign={"left"} mt={"21px"}>
           <Text fontSize={15} color={"#ddd"}>

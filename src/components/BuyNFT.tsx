@@ -10,7 +10,7 @@ import { useGetNFT } from "../hooks/useSubgraph";
 import Image from "next/image";
 import BG_IMAGE from "../assets/images/bg2.png";
 import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
-import { useAccount } from "wagmi";
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
 
 const Buttons = () => {
   const nftSelectState = useRecoilValue(nftSelect);
@@ -37,6 +37,17 @@ const Buttons = () => {
   const [nftSelectedNumber] = useRecoilState(nftSelect);
   const { isSold } = useGetNFT();
   const { isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { chain } = useNetwork();
+  const { switchNetworkAsync, isError, switchNetwork } = useSwitchNetwork();
+
+  const switchToTitan = useCallback(() => {
+    switchNetwork?.(55004);
+  }, [switchNetwork]);
+
+  const connectToWallet = useCallback(() => {
+    connect({ connector: connectors[0] });
+  }, [connectors, connect]);
 
   const addBtnIsDisabled = useMemo(() => {
     if (nftSelectedNumber && isSold(nftSelectedNumber)) {
@@ -45,10 +56,19 @@ const Buttons = () => {
     return false;
   }, [nftSelectedNumber, isSold]);
 
-  const buyBtnIsDisabled = useMemo(() => {
-    if (nft === null || nft?.length === 0 || !saleIsStart) return true;
+  const connectedWrongNetwork = useMemo(() => {
+    if (chain?.id !== 55004 && chain?.id !== 5050) return true;
     return false;
-  }, [nft, saleIsStart]);
+  }, [chain]);
+
+  const buyBtnIsDisabled = useMemo(() => {
+    //connected not supported network
+    if (connectedWrongNetwork) return false;
+    //not match the condition on the supported network
+    if (nft === null || nft?.length === 0 || (isConnected && !saleIsStart))
+      return true;
+    return false;
+  }, [nft, saleIsStart, isConnected, connectedWrongNetwork]);
 
   return (
     <Flex columnGap={"15px"}>
@@ -76,21 +96,44 @@ const Buttons = () => {
         borderRadius={"100px"}
         isDisabled={buyBtnIsDisabled}
         _disabled={{ bgColor: "#1e1e24", color: "#5a5a5a" }}
-        onClick={isApproved ? callToMint : callToApprove}
+        onClick={
+          !isConnected
+            ? connectToWallet
+            : connectedWrongNetwork
+            ? switchToTitan
+            : isApproved
+            ? callToMint
+            : callToApprove
+        }
         lineHeight={1.53}
       >
-        <Text>{!isConnected || isApproved ? "Buy Now" : "Approve"}</Text>
-        {nft && nft.length > 0 && isApproved && (
-          <Flex
-            fontWeight={"normal"}
-            ml={"5px"}
-            columnGap={"5px"}
-            alignItems={"center"}
-          >
-            <Text fontSize={12}>|</Text>
-            <Text>{nft.length * 30} TON</Text>
-          </Flex>
-        )}
+        <Flex
+          w={"100%"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          pb={"2px"}
+        >
+          <Text>
+            {!isConnected
+              ? "Connect Wallet"
+              : connectedWrongNetwork
+              ? "Change network"
+              : isApproved
+              ? "Buy Now"
+              : "Approve"}
+          </Text>
+          {nft && nft.length > 0 && isApproved && (
+            <Flex
+              fontWeight={"normal"}
+              ml={"5px"}
+              columnGap={"5px"}
+              alignItems={"center"}
+            >
+              <Text fontSize={12}>|</Text>
+              <Text>{nft.length * 30} TON</Text>
+            </Flex>
+          )}
+        </Flex>
       </Button>
     </Flex>
   );
@@ -113,6 +156,7 @@ const InputSelector = () => {
   const [, setNft] = useRecoilState(nftSelect);
 
   useEffect(() => {
+    if (input.value > 100) return;
     if (input.value) return setNft(Number(input.value));
   }, [input.value, setNft]);
 
@@ -197,10 +241,10 @@ const CardCarousell = () => {
   const [nftSelectedNumber] = useRecoilState(nftSelect);
 
   const formmatImageNumber = (num: number) => {
-    if (num === 101) {
+    if (num === 100) {
       return 0;
     }
-    if (num === 102) {
+    if (num === 101) {
       return 1;
     }
     if (num === -1) {
