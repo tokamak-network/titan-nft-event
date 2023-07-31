@@ -357,10 +357,44 @@ const CardSection = () => {
 
 const Title = () => {
   return (
-    <Flex flexDir={"column"} rowGap={"6px"} mb={"30px"} zIndex={100}>
+    <Flex
+      flexDir={"column"}
+      alignItems={"center"}
+      mb={"30px"}
+      zIndex={100}
+      w={"348px"}
+    >
       <Text fontSize={40} fontWeight={"bold"}>
         Buy an NFT
       </Text>
+      <Flex
+        flexDir={"column"}
+        fontSize={13}
+        color={"#aaa"}
+        alignItems={"center"}
+        mt={"10px"}
+        mb={"60px"}
+      >
+        <Text color={"#fff"}>Before you buy</Text>
+        <Text mt={"25px"}>
+          Our NFTs are being sold in Titan network. So, you should:{" "}
+        </Text>
+        <Text mt={"15px"}>
+          1. Make sure you have enough TON &amp; ETH(for gas fee){" "}
+        </Text>
+        <Text>2. Deposit TON &amp; ETH(for gas fee) into Titan network. </Text>
+        <Text mt={"15px"}>
+          For this, visit to{" "}
+          <Link
+            href="https://bridge.tokamak.network/"
+            textDecor={"underline"}
+            isExternal
+          >
+            Bridge &amp; Swap
+          </Link>{" "}
+        </Text>
+      </Flex>
+
       <Text color={"#aaaaaa"} fontSize={13}>
         Select your desired NFT serial number
       </Text>

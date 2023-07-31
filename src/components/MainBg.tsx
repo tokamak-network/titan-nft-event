@@ -28,7 +28,7 @@ const SectionMerchandise = () => {
         flexDir={"column"}
         justify={"center"}
         alignItems={"center"}
-        w={"400px"}
+        w={mobileView ? "100%" : "400px"}
         h={"390px"}
       >
         <Image
