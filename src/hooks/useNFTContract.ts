@@ -7,18 +7,20 @@ import {
 } from "../constants/contracts/addresses";
 import { useErc20Allowance, useErc20Approve } from "./generated";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { nftCartList } from "../recoil/atomState";
 
 export function useNFTContract() {
   const cartList = useRecoilValue(nftCartList);
 
-  const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: FIRST_EVENT_CONTRACT,
-    abi: FirstEvent.abi,
-    functionName: "multiPurchase",
-    args: [cartList],
-  });
+  const { data, isLoading, isSuccess, write, reset, isIdle } = useContractWrite(
+    {
+      address: FIRST_EVENT_CONTRACT,
+      abi: FirstEvent.abi,
+      functionName: "multiPurchase",
+      args: [cartList],
+    }
+  );
 
   const { data: startTime } = useContractRead({
     address: FIRST_EVENT_CONTRACT,
@@ -90,6 +92,15 @@ export function useNFTContract() {
     approve?.();
   }, [approve]);
 
+  const [, setNftCartList] = useRecoilState(nftCartList);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setNftCartList(null);
+      reset?.();
+    }
+  }, [isSuccess, reset, setNftCartList]);
+
   return {
     callToMint,
     isLoading,
@@ -97,5 +108,6 @@ export function useNFTContract() {
     callToApprove,
     approveIsLoading,
     saleIsStart,
+    isPuchasedSuccess: isSuccess,
   };
 }

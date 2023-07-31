@@ -296,6 +296,10 @@ const Title = () => {
 };
 
 export function Order() {
+  const { myNFTs } = useGetNFT();
+
+  if (myNFTs?.nfts.length === 0) return null;
+
   return (
     <Flex flexDir={"column"} alignItems={"center"}>
       <Title />
