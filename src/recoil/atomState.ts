@@ -18,6 +18,7 @@ export const shippingAddress = atom<ShippingAddress>({
     baseAddress: undefined,
     defaultAddress: undefined,
     name: undefined,
+    email: undefined,
     phoneNumber: undefined,
   },
 });
