@@ -16,6 +16,7 @@ import ARROW_YELLOW_ICON from "../assets/icons/arrow-yellow.svg";
 import Image from "next/image";
 import { Round_T, checkSaleRound } from "../utils/checkSaleRound";
 import { motion } from "framer-motion";
+import EMPTY_ICON from "../assets/icons/icon_empty.svg";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -197,6 +198,17 @@ const Shipping = () => {
 
 const PurcasedCards = (props: { round: Round_T }) => {
   const { myNFTs } = useGetNFT();
+
+  if (myNFTs?.nfts.length === 0) {
+    return (
+      <Flex rowGap={"6px"} flexDir={"column"} alignItems={"center"}>
+        <Image src={EMPTY_ICON} alt={"EMPTY_ICON"}></Image>
+        <Text fontSize={15} fontWeight={"bold"} color={"#666"}>
+          Empty
+        </Text>
+      </Flex>
+    );
+  }
 
   return (
     <Wrap
