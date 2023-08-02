@@ -17,6 +17,7 @@ import Image from "next/image";
 import { Round_T, checkSaleRound } from "../utils/checkSaleRound";
 import { motion } from "framer-motion";
 import EMPTY_ICON from "../assets/icons/icon_empty.svg";
+import { useMyNft } from "../hooks/useMyNft";
 
 type InputComponentProps = {
   inputKey: keyof ShippingAddress;
@@ -61,6 +62,7 @@ const InputAddress = () => {
   const { address } = useAccount();
   const { addressData } = useShippingAddress();
   const [, setIsOpen] = useRecoilState(openPostCode);
+  const { myNftList } = useMyNft();
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -83,9 +85,12 @@ const InputAddress = () => {
 
     const hasAllValue = checkAllKeysHaveValues(paramsToSave);
     if (hasAllValue && address) {
+      const saleRound = checkSaleRound(Math.floor(new Date().getTime() / 1000));
       const res = await createNewShippingAddress({
         userAccountAddress: address,
         addressData: paramsToSave,
+        saleRound,
+        nfts: myNftList[saleRound],
       });
       if (res) {
         return alert("Success to save your shipping address");
@@ -198,10 +203,11 @@ const Shipping = () => {
 
 const PurcasedCards = (props: { round: Round_T }) => {
   const { myNFTs } = useGetNFT();
+  const { myNftList } = useMyNft();
 
-  if (myNFTs?.nfts.length === 0) {
+  if (myNftList[props.round].length === 0) {
     return (
-      <Flex rowGap={"6px"} flexDir={"column"} alignItems={"center"}>
+      <Flex rowGap={"6px"} flexDir={"column"} alignItems={"center"} mb={"25px"}>
         <Image src={EMPTY_ICON} alt={"EMPTY_ICON"}></Image>
         <Text fontSize={15} fontWeight={"bold"} color={"#666"}>
           Empty
@@ -219,20 +225,17 @@ const PurcasedCards = (props: { round: Round_T }) => {
       justify={"center"}
       mb={"25px"}
     >
-      {myNFTs?.nfts.map((nft: { tokenID: string; timeHistory: number[] }) => {
-        const soldTime = nft.timeHistory[1];
-        const saleRound = checkSaleRound(soldTime);
-
-        if (props.round !== saleRound) return null;
-
-        return (
-          <NFTcardForCart
-            key={Number(nft.tokenID)}
-            tokenId={Number(nft.tokenID)}
-            isPurchased={true}
-          />
-        );
-      })}
+      {myNftList[props.round].map(
+        (nft: { tokenID: string; timeHistory: number[] }) => {
+          return (
+            <NFTcardForCart
+              key={Number(nft.tokenID)}
+              tokenId={Number(nft.tokenID)}
+              isPurchased={true}
+            />
+          );
+        }
+      )}
     </Wrap>
   );
 };

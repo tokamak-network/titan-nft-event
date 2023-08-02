@@ -9,20 +9,29 @@ import {
 } from "firebase/database";
 import { database } from "./index";
 import { ShippingAddress } from "../recoil/type";
+import { Round_T } from "../utils/checkSaleRound";
 
 export async function createNewShippingAddress(params: {
   userAccountAddress: string;
   addressData: {};
+  saleRound: Round_T | "afterRound";
+  nfts: any[];
 }) {
   try {
-    const { userAccountAddress, addressData } = params;
-    const directory = `address/${userAccountAddress}`;
-    const result = await update(ref(database, directory), {
+    const { userAccountAddress, addressData, saleRound, nfts } = params;
+    const addressDirectory = `address/${userAccountAddress}`;
+    const nftDirectory = `nfts/${saleRound}/${userAccountAddress}`;
+    const result = await update(ref(database, addressDirectory), {
       ...addressData,
+    });
+    const result2 = await update(ref(database, nftDirectory), {
+      nfts,
     });
     //@ts-ignore
     const hashKey = result._path.pieces_[2];
-    return { hashKey: hashKey as string };
+    //@ts-ignore
+    const hashKey2 = result2._path.pieces_[2];
+    return { hashKey: hashKey as string, hashKey2: hashKey2 as string };
   } catch (e) {
     console.log(e);
     return new Error("failed to save shipping address data");
