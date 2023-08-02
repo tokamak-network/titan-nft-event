@@ -10,6 +10,7 @@ function useMediaView(viewPort?: number) {
   const [bp1024px] = useMediaQuery("(max-width: 1023px)");
 
   const [customMaxView] = useMediaQuery(`"(max-width: ${viewPort}px)"`);
+  const [customMinView] = useMediaQuery(`"(min-width: ${viewPort}px)"`);
   return {
     pcView,
     tableView,
@@ -18,6 +19,7 @@ function useMediaView(viewPort?: number) {
     bp500px,
     bp1024px,
     customMaxView,
+    customMinView,
   };
 }
 

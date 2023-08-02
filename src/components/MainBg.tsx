@@ -3,9 +3,10 @@ import BG_IMAGE from "../assets/images/bg1.png";
 import BG_TABLET_IMAGE from "../assets/images/bg1_tablet.png";
 import BG_MOBILE_IMAGE from "../assets/images/bg1_mobile.png";
 
-import NFT_CARDS_IMAGE from "../assets/images/visual_NFT-card_all.png";
+import NFT_CARDS_IMAGE from "../assets/images/visual_NFT-card_all@2x.png";
 import NFT_CARDS_TABLET_IMAGE from "../assets/images/visual_NFT-card_all@2x_tablet.png";
-import NFT_CARDS_MOBILE_IMAGE from "../assets/images/mobile-visual_NFT-card_all@2x.png";
+import NFT_CARDS_MOBILE_IMAGE from "../assets/images/mobile-visual_NFT-card_all.png";
+import NFT_CARDS_MOBILE_IMAGE2x from "../assets/images/mobile-visual_NFT-card_all@2x.png";
 
 import CARD_IMAGE from "../assets/images/Card-all.png";
 import CARD_MOBILE_IMAGE from "../assets/images/Card-all-mobile.png";
@@ -14,7 +15,7 @@ import MERCHANDISE_IMAGE from "../assets/images/merchandise.png";
 import LINE_IMAGE from "../assets/images/line.png";
 
 import Image from "next/image";
-import useMediaView from "../hooks/useMediaView";
+import useMediaView, { useWindowDimension } from "../hooks/useMediaView";
 
 const SectionMerchandise = () => {
   const { mobileView } = useMediaView();
@@ -84,7 +85,8 @@ const SectionNFT = () => {
 };
 
 const MiddleSection = () => {
-  const { pcView, tableView, mobileView } = useMediaView();
+  const { pcView } = useMediaView();
+  const { width } = useWindowDimension();
 
   return (
     <Flex
@@ -93,7 +95,7 @@ const MiddleSection = () => {
       justifyContent={"space-between"}
       alignItems={pcView ? "flex-start" : "center"}
       px={"120px"}
-      mt={["20%", "20%", "52px"]}
+      mt={[width > 400 ? "30%" : "15%", "5%", "52px"]}
       rowGap={pcView ? undefined : "120px"}
     >
       <SectionNFT />
@@ -105,6 +107,8 @@ const MiddleSection = () => {
 
 export function MainBg() {
   const { pcView, tableView, mobileView } = useMediaView();
+  const { width } = useWindowDimension();
+
   return (
     <Flex w={"100%"} flexDir={"column"} pos={"relative"}>
       <Flex flex={"column"} h={["659px", "579px", "927px"]}>
@@ -119,11 +123,9 @@ export function MainBg() {
           >
             <Image
               src={
-                // BG_IMAGE
                 pcView
                   ? BG_IMAGE
-                  : // : BG_TABLET_IMAGE
-                  tableView
+                  : tableView
                   ? BG_TABLET_IMAGE
                   : BG_MOBILE_IMAGE
               }
@@ -156,10 +158,10 @@ export function MainBg() {
           w={"100%"}
           justifyContent={"center"}
           pos={"absolute"}
-          mt={["394px", "310px", "455px"]}
+          mt={["420px", "310px", "455px"]}
         >
           <Flex
-            w={["100%", "100%", "1060px"]}
+            w={["100%", "635px", "1060px"]}
             // h={["265px", "265px", "442px"]}
             justifyContent={"center"}
           >
@@ -169,6 +171,8 @@ export function MainBg() {
                   ? NFT_CARDS_IMAGE
                   : tableView
                   ? NFT_CARDS_TABLET_IMAGE
+                  : width > 400
+                  ? NFT_CARDS_MOBILE_IMAGE2x
                   : NFT_CARDS_MOBILE_IMAGE
               }
               alt={"NFT_CARDS_IMAGE"}
