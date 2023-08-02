@@ -295,7 +295,11 @@ const MoreList = () => {
   return (
     <Text mt={"15px"} mb={"55px"} color={"#ddd"} fontSize={13} zIndex={100}>
       See how limited edition NFTs are organized.{" "}
-      <Link textDecor={"underline"} href="" isExternal>
+      <Link
+        textDecor={"underline"}
+        href="https://docs.google.com/presentation/d/1ui0s9MFtJnH7G0nzxMOj9ZKryi2EqURdes6TC2sUvjA/edit#slide=id.g25b9463d27b_0_2"
+        isExternal
+      >
         GO
       </Link>
     </Text>

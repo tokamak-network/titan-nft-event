@@ -202,7 +202,6 @@ const Shipping = () => {
 };
 
 const PurcasedCards = (props: { round: Round_T }) => {
-  const { myNFTs } = useGetNFT();
   const { myNftList } = useMyNft();
 
   if (myNftList[props.round].length === 0) {
@@ -302,9 +301,21 @@ const SaleRound = () => {
 
 const Title = () => {
   return (
-    <Flex flexDir={"column"} rowGap={"6px"} mb={"55px"}>
+    <Flex
+      flexDir={"column"}
+      rowGap={"6px"}
+      mb={"55px"}
+      alignItems={"center"}
+      textAlign={"center"}
+    >
       <Text fontSize={40} fontWeight={"bold"}>
         Purchased Order
+      </Text>
+      <Text maxW={"410px"} fontSize={13} color={"#aaa"} lineHeight={"20px"}>
+        A free merchandise package will be sent only to{" "}
+        <span style={{ color: "#ffff07" }}>the first buyer</span> of each NFT.
+        You should provide your address before the batch shipping starts as
+        listed below.
       </Text>
     </Flex>
   );
