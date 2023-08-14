@@ -297,7 +297,7 @@ const MoreList = () => {
       See how limited edition NFTs are organized.{" "}
       <Link
         textDecor={"underline"}
-        href="https://docs.google.com/presentation/d/1ui0s9MFtJnH7G0nzxMOj9ZKryi2EqURdes6TC2sUvjA/edit#slide=id.g25b9463d27b_0_2"
+        href="https://docs.google.com/spreadsheets/d/1COWOVzHCb7I3cHI1WrgGtG0dFrV8r8cHS59UYNjo6OM/edit#gid=0"
         isExternal
       >
         GO
