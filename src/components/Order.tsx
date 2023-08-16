@@ -244,10 +244,10 @@ const SaleRoundInfo = (props: { round: Round_T; isActive: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const endTime =
     round === "1st"
-      ? "Monday, August 7 2023, 1:00 PM (KST)"
+      ? "Monday, August 21 2023, 1:00 PM (KST)"
       : round === "2nd"
-      ? "Monday, August 14 2023, 1:00 PM (KST)"
-      : "Monday, August 21 2023, 1:00 PM (KST)";
+      ? "Monday, August 28 2023, 1:00 PM (KST)"
+      : "Monday, September 4 2023, 1:00 PM (KST)";
 
   return (
     <Flex flexDir={"column"} rowGap={"30px"} alignItems={"center"}>

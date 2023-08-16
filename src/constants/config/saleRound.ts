@@ -1,10 +1,10 @@
 const currentTimestamp = Math.floor(new Date().getTime() / 1000);
 
-//2023.8.14 13:00
-const firstRoundEnd = 1691985632;
-//2023.8.21 13:00
-const secondRoundEnd = 1692590432;
-//2023.8.28 13:00
-const thirdRoundEnd = 1693195232;
+//Monday, August 21, 2023 1:00:00 PM GMT+09:00
+const firstRoundEnd = 1692590400;
+//Monday, August 28, 2023 1:00:00 PM GMT+09:00
+const secondRoundEnd = 1693195200;
+//Monday, September 4, 2023 1:00:00 PM GMT+09:00
+const thirdRoundEnd = 1693800000;
 
 export { firstRoundEnd, secondRoundEnd, thirdRoundEnd };
