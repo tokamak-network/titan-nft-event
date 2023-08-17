@@ -88,7 +88,7 @@ const Buttons = () => {
         isDisabled={addBtnIsDisabled}
         _disabled={{ bgColor: "#1e1e24", color: "#5a5a5a" }}
       >
-        Add to Card
+        Add to Cart
       </Button>
       <Button
         w={"180px"}
