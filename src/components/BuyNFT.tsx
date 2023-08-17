@@ -302,14 +302,15 @@ const CardCarousell = () => {
 const MoreList = () => {
   return (
     <Text mt={"15px"} mb={"55px"} color={"#ddd"} fontSize={13} zIndex={100}>
-      See how limited edition NFTs are organized.{" "}
+      Clike{" "}
       <Link
         textDecor={"underline"}
         href="https://docs.google.com/spreadsheets/d/1COWOVzHCb7I3cHI1WrgGtG0dFrV8r8cHS59UYNjo6OM/edit#gid=0"
         isExternal
       >
-        GO
-      </Link>
+        here
+      </Link>{" "}
+      to discover more about Titan NFTs.
     </Text>
   );
 };
