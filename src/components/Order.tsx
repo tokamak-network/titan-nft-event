@@ -331,6 +331,17 @@ export function Order() {
       <Title />
       <SaleRound />
       <Shipping />
+      <Text
+        fontSize={13}
+        color={"#aaaaaa"}
+        mt={"15px"}
+        w={["340px", "410px", "410px"]}
+        textAlign={"center"}
+      >
+        If you live outside of South Korea, please email{" "}
+        <span style={{ color: "#fff" }}>alex.k@onther.io</span> with the exact
+        address you’d like us to ship to.
+      </Text>
     </Flex>
   );
 }

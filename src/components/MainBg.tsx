@@ -51,8 +51,8 @@ const SectionMerchandise = () => {
         mt={["16px", "16px", "44px"]}
       >
         After you purchase an NFT, we’ll ship you a package of merchandise,
-        including t-shirts, mugs, keychains, etc., with your purchased NFT image
-        imprinted on them.
+        including a bottle, a NFT card (plastic) and its storage (tin case), and
+        a L size T-shirt imprinted with the NFT you purchased.
       </Text>
     </Flex>
   );
