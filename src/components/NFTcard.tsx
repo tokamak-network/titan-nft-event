@@ -66,7 +66,7 @@ export function NFTcardForCart(props: NFTcardForCartProps) {
             cursor={"pointer"}
             onClick={() => removeItem(tokenId)}
           >
-            Delete
+            Remove
           </Text>
         )}
       </Flex>
