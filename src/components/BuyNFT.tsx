@@ -57,7 +57,9 @@ const Buttons = () => {
   }, [nftSelectedNumber, isSold]);
 
   const connectedWrongNetwork = useMemo(() => {
-    if (chain?.id !== 55004 && chain?.id !== 5050) return true;
+    if (chain?.id !== 55004
+      // && chain?.id !== 5050
+    ) return true;
     return false;
   }, [chain]);
 
