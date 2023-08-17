@@ -330,8 +330,6 @@ const Title = () => {
 export function Order() {
   const { myNFTs } = useGetNFT();
 
-  console.log(myNFTs);
-
   if (myNFTs === undefined || myNFTs?.nfts.length === 0) return null;
 
   return (

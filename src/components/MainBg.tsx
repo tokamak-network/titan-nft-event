@@ -51,8 +51,8 @@ const SectionMerchandise = () => {
         mt={["16px", "16px", "44px"]}
       >
         After you purchase an NFT, we’ll ship you a package of merchandise,
-        including a bottle, a NFT card (plastic) and its storage (tin case), and
-        a L size T-shirt imprinted with the NFT you purchased.
+        including a bottle, an NFT card (plastic) and its storage (tin case),
+        and an L size T-shirt imprinted with the NFT you purchased.
       </Text>
     </Flex>
   );
@@ -64,7 +64,7 @@ const SectionNFT = () => {
   return (
     <Flex flexDir={"column"} alignItems={"center"} textAlign={"center"}>
       <Text fontSize={22} fontWeight={600} mb={"60px"}>
-        100 limited NFTS
+        100 limited NFTs
       </Text>
       <Box
         w={mobileView ? "320px" : "400px"}

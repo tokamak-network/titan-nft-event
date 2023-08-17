@@ -57,9 +57,11 @@ const Buttons = () => {
   }, [nftSelectedNumber, isSold]);
 
   const connectedWrongNetwork = useMemo(() => {
-    if (chain?.id !== 55004
+    if (
+      chain?.id !== 55004
       // && chain?.id !== 5050
-    ) return true;
+    )
+      return true;
     return false;
   }, [chain]);
 
@@ -165,7 +167,7 @@ const InputSelector = () => {
   // <Image src={MINUS_ICON} alt={"MINUS_ICON"} />
 
   return (
-    <Flex mb={"12px"} w={"150px"} h={"35px"} zIndex={100}>
+    <Flex mb={"22px"} w={"150px"} h={"35px"} zIndex={100}>
       <Button
         {...dec}
         w={"40px"}
@@ -226,15 +228,19 @@ const Warning = () => {
 
   if (isAlreadySold)
     return (
-      <Text
+      <Flex
         fontSize={13}
         color={"#e23738"}
         pos={"absolute"}
-        top={"50px"}
+        top={"55px"}
         zIndex={100}
+        flexDir={"column"}
+        alignItems={"center"}
+        lineHeight={"18px"}
       >
-        This number has been sold
-      </Text>
+        <Text>This Titan NFT is sold out.</Text>
+        <Text>Try clicking - or + for other NFTs.</Text>
+      </Flex>
     );
   return null;
 };
@@ -386,17 +392,17 @@ const Title = () => {
           Our NFTs are being sold in Titan network. So, you should:{" "}
         </Text>
         <Text mt={"15px"}>
-          1. Make sure you have enough TON &amp; ETH(for gas fee){" "}
+          1. Make sure you have enough TON &amp; ETH (for gas fee){" "}
         </Text>
-        <Text>2. Deposit TON &amp; ETH(for gas fee) into Titan network. </Text>
+        <Text>2. Deposit TON &amp; ETH (for gas fee) into Titan network. </Text>
         <Text mt={"15px"}>
-          For this, visit to{" "}
+          For this, visit{" "}
           <Link
             href="https://bridge.tokamak.network/"
             textDecor={"underline"}
             isExternal
           >
-            Bridge &amp; Swap
+            Tokamak Bridge
           </Link>{" "}
         </Text>
       </Flex>
