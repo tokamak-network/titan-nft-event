@@ -311,7 +311,13 @@ const Title = () => {
       <Text fontSize={40} fontWeight={"bold"}>
         Purchased Order
       </Text>
-      <Text maxW={"410px"} fontSize={13} color={"#aaa"} lineHeight={"20px"}>
+      <Text
+        maxW={"410px"}
+        fontSize={13}
+        color={"#aaa"}
+        lineHeight={"20px"}
+        px={["10px", "", ""]}
+      >
         A free merchandise package will be sent only to{" "}
         <span style={{ color: "#ffff07" }}>the first buyer</span> of each NFT.
         You should provide your address before the batch shipping starts as

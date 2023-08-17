@@ -77,8 +77,7 @@ const SectionNFT = () => {
       </Box>
       <Text color={"#dddddd"} w={mobileView ? "340px" : "400px"} mt={"44px"}>
         100 NFTs will be issued, each featuring a unique design <br />
-        and serial number. <br /> You can apply this NFT as your profile picture
-        on the Tokamak webpage (coming soon).
+        and serial number.
       </Text>
     </Flex>
   );
@@ -152,6 +151,10 @@ export function MainBg() {
           </Text>
           <Text fontSize={[15, 15, 20]} opacity={0.8}>
             to celebrate the opening of Titan L2{" "}
+          </Text>
+          <Text fontSize={[13, 13, 18]} opacity={0.8} mt={"5px"}>
+            {" "}
+            Thursday, August 17, 2023 05:00 PM (KST) ~
           </Text>
         </Flex>
         <Flex
