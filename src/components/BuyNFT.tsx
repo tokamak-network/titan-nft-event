@@ -167,7 +167,7 @@ const InputSelector = () => {
   // <Image src={MINUS_ICON} alt={"MINUS_ICON"} />
 
   return (
-    <Flex mb={"22px"} w={"150px"} h={"35px"} zIndex={100}>
+    <Flex mb={"22px"} w={"150px"} h={"35px"} zIndex={100} pt={"5px"}>
       <Button
         {...dec}
         w={"40px"}
