@@ -230,7 +230,7 @@ const Warning = () => {
     return (
       <Flex
         fontSize={13}
-        color={"#e23738"}
+        color={"##00CC00"}
         pos={"absolute"}
         top={"55px"}
         zIndex={100}
